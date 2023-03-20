@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BUYSELL</title>
+    <title>Обувной интернет магазин</title>
 </head>
 <body>
-<h1>BUYSELL</h1><hr>
+<h1>Обувной интернет магазин</h1><hr>
 <h4>Подробная информация о товаре</h4>
 <#list images as img>
     <img src="/images/${img.id}" height="60px"/><br><br>
 </#list>
-<b>Название товара: </b>${product.title}<br>
-<b>Описание товара: </b>${product.description}<br>
-<b>Цена: </b>${product.price}<br>
-<b>Город: </b>${product.city}<br>
-<b>Автор: </b>${product.author}<br>
+<b>Категория  </b>${product.category}<br>
+<b>Описание  </b>${product.description}<br>
+<b>Производитель  </b>${product.manufacturer}<br>
+<b>Цена  </b>${product.price}&nbsp; руб.<br>
+<b>Размер  </b>${product.size}<br>
 <hr>
 <form action="/product/delete/${product.id}" method="post">
     <input type="submit" value="Удалить товар"/>

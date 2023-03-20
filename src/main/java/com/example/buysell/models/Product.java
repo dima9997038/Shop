@@ -19,16 +19,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @Column(name = "title")
-    private String title;
+    @Column(name = "category")
+    private String category;
     @Column(name = "description", columnDefinition = "text")
     private String description;
+    @Column(name = "manufacturer")
+    private String manufacturer;
     @Column(name = "price")
-    private int price;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "author")
-    private String author;
+    private double price;
+    @Column(name = "size")
+    private double size;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
     mappedBy = "product")
     private List<Image> images = new ArrayList<>();
