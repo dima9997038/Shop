@@ -6,7 +6,7 @@
 <body>
 <h1>Обувной интернет магазин | <a href="/login">Войти</a></h1><hr>
 <form action="/logout" method="post">
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <#--     <input type="hidden" name="_csrf" value="${_csrf.token}">-->
     <input type="submit" value="Выйти">
 </form>
 <h4>Товары</h4>
