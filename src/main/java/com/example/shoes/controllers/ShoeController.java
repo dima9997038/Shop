@@ -1,7 +1,7 @@
-package com.example.buysell.controllers;
+package com.example.shoes.controllers;
 
-import com.example.buysell.models.Product;
-import com.example.buysell.services.ProductService;
+import com.example.shoes.models.Shoes;
+import com.example.shoes.services.ShoesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,33 +15,33 @@ import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
-public class ProductController {
-    private final ProductService productService;
+public class ShoeController {
+    private final ShoesService shoesService;
 
     @GetMapping("/")
     public String products(@RequestParam(name = "category", required = false) String category, Model model) {
-        model.addAttribute("products", productService.listProducts(category));
+        model.addAttribute("products", shoesService.listShoes(category));
         return "products";
     }
 
     @GetMapping("/product/{id}")
     public String productInfo(@PathVariable Long id, Model model) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        model.addAttribute("images", product.getImages());
-        return "product-info";
+        Shoes shoe = shoesService.getShoeById(id);
+        model.addAttribute("shoe", shoe);
+        model.addAttribute("images", shoe.getImages());
+        return "shoe-info";
     }
 
     @PostMapping("/product/create")
     public String createProduct(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
-                                 @RequestParam("file3") MultipartFile file3, Product product) throws IOException {
-        productService.saveProduct(product, file1, file2, file3);
+                                @RequestParam("file3") MultipartFile file3, Shoes product) throws IOException {
+        shoesService.saveShoe(product, file1, file2, file3);
         return "redirect:/";
     }
 
     @PostMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+        shoesService.deleteShoe(id);
         return "redirect:/";
     }
 }

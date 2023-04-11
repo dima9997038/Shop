@@ -1,4 +1,4 @@
-package com.example.buysell.models;
+package com.example.shoes.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,5 +29,5 @@ public class Image {
     @Lob
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Product product;
+    private Shoes product;
 }

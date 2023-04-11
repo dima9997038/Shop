@@ -1,4 +1,4 @@
-package com.example.buysell.models;
+package com.example.shoes.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Shoes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -41,7 +41,7 @@ public class Product {
     }
 
 
-    public void addImageToProduct(Image image) {
+    public void addImageShoes(Image image) {
         image.setProduct(this);
         images.add(image);
     }

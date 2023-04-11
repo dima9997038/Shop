@@ -9,13 +9,13 @@
 <#list images as img>
     <img src="/images/${img.id}" height="60px"/><br><br>
 </#list>
-<b>Категория  </b>${product.category}<br>
-<b>Описание  </b>${product.description}<br>
-<b>Производитель  </b>${product.manufacturer}<br>
-<b>Цена  </b>${product.price}&nbsp; руб.<br>
-<b>Размер  </b>${product.size}<br>
+<b>Категория  </b>${shoe.category}<br>
+<b>Описание  </b>${shoe.description}<br>
+<b>Производитель  </b>${shoe.manufacturer}<br>
+<b>Цена  </b>${shoe.price}&nbsp; руб.<br>
+<b>Размер  </b>${shoe.size}<br>
 <hr>
-<form action="/product/delete/${product.id}" method="post">
+<form action="/product/delete/${shoe.id}" method="post">
     <input type="submit" value="Удалить товар"/>
 </form>
 </body>
