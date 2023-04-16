@@ -1,8 +1,14 @@
 package com.example.shoes.controllers;
 
 import com.example.shoes.models.Shoes;
+import com.example.shoes.models.User;
+import com.example.shoes.repositories.UserRepository;
+import com.example.shoes.services.BucketService;
 import com.example.shoes.services.ShoesService;
+import com.example.shoes.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +23,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ShoeController {
     private final ShoesService shoesService;
+    private final UserService userService;
+    private final BucketService bucketService;
 
     @GetMapping("/")
     public String products(@RequestParam(name = "category", required = false) String category, Model model) {
         model.addAttribute("products", shoesService.listShoes(category));
+        model.addAttribute("buckets", bucketService.getAllProductsByUserId());
         return "products";
     }
 
@@ -39,9 +48,16 @@ public class ShoeController {
         return "redirect:/";
     }
 
-    @PostMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        shoesService.deleteShoe(id);
+    @PostMapping("/product/addBucket/{id}")
+    public String addBucket(@PathVariable Long id) {
+        userService.addBucket(id);
         return "redirect:/";
     }
+    @PostMapping("/bucket/delete/{id}")
+    public String deleteFromBucket(@PathVariable Long id){
+        bucketService.deleteProductFromBucket(id);
+        System.out.println();
+        return "redirect:/";
+    }
+
 }

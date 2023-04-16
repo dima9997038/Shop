@@ -9,7 +9,7 @@
     <#--     <input type="hidden" name="_csrf" value="${_csrf.token}">-->
     <input type="submit" value="Выйти">
 </form>
-<h4>Товары</h4>
+<h2>Товары</h2>
 <form action="/" method="get">
     Поиск по категории:
     <p>
@@ -25,23 +25,23 @@
 </form>
 <#list products as product>
     <div>
-        <p><b>${product.category}&nbsp;</b>${product.description} &nbsp; Производитель:  ${product.manufacturer} &nbsp; Цена:  ${product.price} руб. &nbsp; Размер:  ${product.size}  <a href="/product/${product.id}">Подробно</a></p></p>
+        <p><b>${product.category}&nbsp;</b>${product.description} &nbsp; Производитель:  ${product.manufacturer} &nbsp; Цена:  ${product.price} руб. &nbsp; Размер:  ${product.size}  <a href="/product/${product.id}">Подробно</a></p>
     </div>
     <#else>
     <h3>Товаров нет</h3>
 </#list>
-<hr>
-<h3>Создать новый товар</h3>
-<form action="/product/create" method="post" enctype="multipart/form-data">
-    Категория <input type="text" name="category"/><br>
-    Описание <input type="text" name="description"/><br>
-    Производитель <input type="text" name="manufacturer"/><br>
-    Цена <input type="number step=0.01" name="price"/><br>
-    Размер <input type="number step=0.5" name="size"/><br>
-    Первая фотография: <input type="file" name="file1"/><br><br>
-    Вторая фотография: <input type="file" name="file2"/><br><br>
-    Третья фотография: <input type="file" name="file3"/><br><br>
-    <input type="submit" value="Добавить товар"/>
-</form>
+<br>
+<h2>Моя корзина</h2>
+<#list buckets as bucket>
+<div>
+    <p><b>${bucket.category}&nbsp;</b>${bucket.description} &nbsp; Производитель:  ${bucket.manufacturer} &nbsp; Цена:  ${bucket.price} руб. &nbsp; Размер:  ${bucket.size} Количество: ${bucket.quantity}
+    <form action="/bucket/delete/${bucket.productId}" method="post">
+        <input type="submit" value="Удалить товар из корзины"/>
+    </form>
+    </p>
+</div>
+<#else>
+<h3>Товаров нет</h3>
+</#list>
 </body>
 </html>

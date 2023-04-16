@@ -36,6 +36,6 @@
     <h3>Пользователей нет</h3>
 </#list>
 </table>
-
+<th><a href="/admin/products">Редактировние товаров</a></th>
 </body>
 </html>
