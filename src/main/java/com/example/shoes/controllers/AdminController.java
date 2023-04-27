@@ -1,5 +1,6 @@
 package com.example.shoes.controllers;
 
+import com.example.shoes.models.Shoes;
 import com.example.shoes.services.ShoesService;
 import com.example.shoes.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,12 @@ public class AdminController {
     public String deleteProduct(@PathVariable Long id) {
         shoesService.deleteShoe(id);
         return "redirect:/admin/products";
+    }
+    @GetMapping("admin/product/{id}")
+    public String productInfo(@PathVariable Long id, Model model) {
+        Shoes shoe = shoesService.getShoeById(id);
+        model.addAttribute("shoe", shoe);
+        model.addAttribute("images", shoe.getImages());
+        return "admin-shoe-info";
     }
 }

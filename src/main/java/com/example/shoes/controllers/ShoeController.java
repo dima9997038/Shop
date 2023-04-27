@@ -2,11 +2,14 @@ package com.example.shoes.controllers;
 
 import com.example.shoes.models.Shoes;
 import com.example.shoes.models.User;
+import com.example.shoes.models.enums.Role;
 import com.example.shoes.repositories.UserRepository;
 import com.example.shoes.services.BucketService;
+import com.example.shoes.services.CustomUserDetailsService;
 import com.example.shoes.services.ShoesService;
 import com.example.shoes.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,12 +29,22 @@ public class ShoeController {
     private final ShoesService shoesService;
     private final UserService userService;
     private final BucketService bucketService;
+    private final UserRepository userRepository;
 
     @GetMapping("/")
-    public String products(@RequestParam(name = "category", required = false) String category, Model model) {
+    public String products(@RequestParam(name = "category", required = false) String category, Model model, Principal principal) {
+        if(principal==null){
+            return "redirect:/login";
+        }
         model.addAttribute("products", shoesService.listShoes(category));
         model.addAttribute("buckets", bucketService.getAllProductsByUserId());
-        return "products";
+      if(((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_ADMIN)){
+          return "admin/products";
+      }
+        if(((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_USER)){
+            return "products";
+        }
+        return "redirect:/login";
     }
 
     @GetMapping("/product/{id}")
