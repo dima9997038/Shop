@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BucketService {
     private final BucketRepository bucketRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final ShoesRepository shoesRepository;
 
