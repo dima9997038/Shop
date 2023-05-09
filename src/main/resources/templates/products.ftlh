@@ -44,5 +44,7 @@
 <#else>
 <h3>Товаров нет</h3>
 </#list>
+<br>
+<h1>Блог | <a href="/blogs">Читать</a></h1><hr>
 </body>
 </html>

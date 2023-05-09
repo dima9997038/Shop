@@ -1,7 +1,9 @@
 package com.example.shoes.controllers;
 
+import com.example.shoes.models.Blog;
 import com.example.shoes.models.Review;
 import com.example.shoes.models.Shoes;
+import com.example.shoes.services.BlogService;
 import com.example.shoes.services.ReviewService;
 import com.example.shoes.services.ShoesService;
 import com.example.shoes.services.UserService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -23,6 +26,7 @@ public class AdminController {
     private final UserService userService;
     private final ShoesService shoesService;
     private final ReviewService reviewService;
+    private final BlogService blogService;
 
     @GetMapping("/admin")
     public String admin(Model model){
@@ -61,5 +65,17 @@ public class AdminController {
     public String allowedReview(@PathVariable Long id) {
         reviewService.allowedReview(id);
         return "redirect:/admin/reviews";
+    }
+    @GetMapping("/admin/blogs")
+    public String blogs( Model model) {
+        List<Blog> blogs=blogService.findAllBlogs();
+        model.addAttribute("blogs",blogs);
+        return "admin-blog";
+    }
+    @PostMapping("/admin/createBlog")
+    public String allowedReview(Blog blog) {
+        blog.setDate(LocalDate.now());
+        blogService.save(blog);
+        return "redirect:/admin/blogs";
     }
 }

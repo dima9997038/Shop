@@ -46,4 +46,7 @@
 <br>
 <a href="/admin/reviews">Список новых отзывов о товаре на одобрение</a>
 </body>
+<br>
+<a href="/admin/blogs">Добавить информацию в блог </a>
+</body>
 </html>

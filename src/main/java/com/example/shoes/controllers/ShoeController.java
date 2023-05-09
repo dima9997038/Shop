@@ -1,5 +1,6 @@
 package com.example.shoes.controllers;
 
+import com.example.shoes.models.Blog;
 import com.example.shoes.models.Review;
 import com.example.shoes.models.Shoes;
 import com.example.shoes.models.User;
@@ -26,6 +27,7 @@ public class ShoeController {
     private final UserService userService;
     private final BucketService bucketService;
     private final ReviewService reviewService;
+    private final BlogService blogService;
 
     @GetMapping("/")
     public String products(@RequestParam(name = "category", required = false) String category, Model model, Principal principal) {
@@ -93,5 +95,11 @@ public class ShoeController {
         List<Review> reviews= reviewService.findAllowedReviewByProductId(id);
         model.addAttribute("reviews",reviews);
         return "review-product";
+    }
+    @GetMapping("/blogs")
+    public String blogs( Model model) {
+        List<Blog> blogs=blogService.findAllBlogs();
+        model.addAttribute("blogs",blogs);
+        return "blogs";
     }
 }
