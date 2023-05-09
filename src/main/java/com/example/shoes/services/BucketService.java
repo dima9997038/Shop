@@ -49,10 +49,18 @@ public class BucketService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(auth.getName());
         Optional<Bucket> byUserIdAndProductId = bucketRepository.findByUserIdAndProductId(user.getId(), productId);
-        Bucket bucket=byUserIdAndProductId.orElse(null);
-        if(bucket!=null){
+        Bucket bucket = byUserIdAndProductId.orElse(null);
+        if (bucket != null) {
             bucket.setStatus(BucketStatus.PAID);
             bucketRepository.save(bucket);
+        }
+    }
+
+    public void paid(Long userId) {
+        List<Bucket> byUserId = bucketRepository.findByUserId(userId);
+        for (Bucket bsk : byUserId) {
+            bsk.setStatus(BucketStatus.PAID);
+            bucketRepository.save(bsk);
         }
     }
 }

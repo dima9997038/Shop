@@ -33,6 +33,9 @@
 </#list>
 <br>
 <h2>Моя корзина</h2>
+<form action="/bucket/paid" method="post">
+    <input type="submit" value="Оплатить заказ"/>
+</form>
 <#list buckets as bucket>
 <div>
     <p><b>${bucket.category}&nbsp;</b>${bucket.description} &nbsp; Производитель:  ${bucket.manufacturer} &nbsp; Цена:  ${bucket.price} руб. &nbsp; Размер:  ${bucket.size} Количество: ${bucket.quantity}
@@ -44,6 +47,7 @@
 <#else>
 <h3>Товаров нет</h3>
 </#list>
+
 <br>
 <h1>Блог | <a href="/blogs">Читать</a></h1><hr>
 </body>

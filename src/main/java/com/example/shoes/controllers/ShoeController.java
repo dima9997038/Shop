@@ -72,6 +72,13 @@ public class ShoeController {
         return "redirect:/";
     }
 
+    @PostMapping("/bucket/paid")
+    public String bucketPaid(Principal principal) {
+        Long userId= ((User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getId();
+        bucketService.paid(userId);
+        return "redirect:/";
+    }
+
         @PostMapping("/product/createReview/{shoeId}")
     public String createReview(@PathVariable Long shoeId,Review review, Principal principal){
             Shoes shoe = shoesService.getShoeById(shoeId);
