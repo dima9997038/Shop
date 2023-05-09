@@ -18,5 +18,7 @@
 <form action="/product/addBucket/${shoe.id}" method="post">
     <input type="submit" value="Добавть товар в корзину"/>
 </form>
+<hr>
+<a href="/review/${shoe.id}">Добавить отзыв о товаре</a>
 </body>
 </html>

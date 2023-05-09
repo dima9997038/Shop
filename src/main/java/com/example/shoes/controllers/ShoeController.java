@@ -1,17 +1,12 @@
 package com.example.shoes.controllers;
 
+import com.example.shoes.models.Review;
 import com.example.shoes.models.Shoes;
 import com.example.shoes.models.User;
 import com.example.shoes.models.enums.Role;
-import com.example.shoes.repositories.UserRepository;
-import com.example.shoes.services.BucketService;
-import com.example.shoes.services.CustomUserDetailsService;
-import com.example.shoes.services.ShoesService;
-import com.example.shoes.services.UserService;
+import com.example.shoes.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,19 +25,19 @@ public class ShoeController {
     private final ShoesService shoesService;
     private final UserService userService;
     private final BucketService bucketService;
-    private final UserRepository userRepository;
+    private final ReviewService reviewService;
 
     @GetMapping("/")
     public String products(@RequestParam(name = "category", required = false) String category, Model model, Principal principal) {
-        if(principal==null){
+        if (principal == null) {
             return "redirect:/login";
         }
         model.addAttribute("products", shoesService.listShoes(category));
         model.addAttribute("buckets", bucketService.getAllProductsByUserId());
-      if(((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_ADMIN)){
-          return "admin/products";
-      }
-        if(((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_USER)){
+        if (((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_ADMIN)) {
+            return "admin/products";
+        }
+        if (((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(Role.ROLE_USER)) {
             return "products";
         }
         return "redirect:/login";
@@ -67,11 +63,35 @@ public class ShoeController {
         userService.addBucket(id);
         return "redirect:/";
     }
+
     @PostMapping("/bucket/delete/{id}")
-    public String deleteFromBucket(@PathVariable Long id){
+    public String deleteFromBucket(@PathVariable Long id) {
         bucketService.deleteProductFromBucket(id);
-        System.out.println();
         return "redirect:/";
     }
 
+        @PostMapping("/product/createReview/{shoeId}")
+    public String createReview(@PathVariable Long shoeId,Review review, Principal principal){
+            Shoes shoe = shoesService.getShoeById(shoeId);
+            review.setUserName(((User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getName());
+            review.setShoes(shoe);
+            review.setAllowed(false);
+            List<Review> reviews = shoe.getReviews();
+            reviews.add(review);
+            shoe.setReviews(reviews);
+            shoesService.saveShoe(shoe);
+        return "redirect:/";
+    }
+    @GetMapping("/review/{id}")
+    public String review(@PathVariable Long id, Model model) {
+        Shoes shoe = shoesService.getShoeById(id);
+        model.addAttribute("shoe", shoe);
+        return "review-add";
+    }
+    @GetMapping("/reviewProduct/{id}")
+    public String reviewProduct(@PathVariable Long id, Model model) {
+        List<Review> reviews= reviewService.findAllowedReviewByProductId(id);
+        model.addAttribute("reviews",reviews);
+        return "review-product";
+    }
 }

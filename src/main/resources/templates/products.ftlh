@@ -26,6 +26,7 @@
 <#list products as product>
     <div>
         <p><b>${product.category}&nbsp;</b>${product.description} &nbsp; Производитель:  ${product.manufacturer} &nbsp; Цена:  ${product.price} руб. &nbsp; Размер:  ${product.size}  <a href="/product/${product.id}">Подробно</a></p>
+        <p><a href="/reviewProduct/${product.id}">Отзывы о товаре</a></p>
     </div>
     <#else>
     <h3>Товаров нет</h3>

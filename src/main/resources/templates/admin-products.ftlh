@@ -43,5 +43,7 @@
     Третья фотография: <input type="file" name="file3"/><br><br>
     <input type="submit" value="Добавить товар"/>
 </form>
+<br>
+<a href="/admin/reviews">Список новых отзывов о товаре на одобрение</a>
 </body>
 </html>

@@ -34,6 +34,9 @@ public class Shoes {
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            mappedBy = "shoes")
+    private List<Review> reviews = new ArrayList<>();
 
     @PrePersist
     private void init() {

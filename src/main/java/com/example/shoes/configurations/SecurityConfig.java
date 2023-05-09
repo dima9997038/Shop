@@ -15,10 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","**/product/**","/images/**","/registration")
                 .permitAll()
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
+        auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 

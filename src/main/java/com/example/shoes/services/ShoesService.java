@@ -21,6 +21,9 @@ public class ShoesService {
         if (category == null || category.equals("Все")) return shoesRepository.findAll();
         else return shoesRepository.findByCategory(category);
     }
+    public void saveShoe(Shoes shoes){
+        shoesRepository.save(shoes);
+    }
 
     public void saveShoe(Shoes shoes1, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         Image image1;
